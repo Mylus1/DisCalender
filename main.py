@@ -37,9 +37,6 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
-
-  if message.content.startswith("!Test"):
-    await message.channel.send("Shit works yo")
   
   if message.content.startswith("!CurrentDate"):
     await message.channel.send(get_local_date())
@@ -51,7 +48,10 @@ async def on_message(message):
     await message.channel.send(f"{get_local_date()} {get_local_time()}")
 
 @bot.command()
-async def reminder(date):
+async def command_test(ctx, arg):
+    await ctx.send(arg)
+
+
   
 
 
