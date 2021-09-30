@@ -2,10 +2,10 @@ import discord
 from discord.ext import commands
 import os
 import datetime
-from replit import db
+from dotenv import load_dotenv
 
 bot = commands.Bot(command_prefix='!')
-
+load_dotenv()
 client = discord.Client()
 currentTime = datetime.datetime.now()
 formatDate = currentTime.strftime("%x")
@@ -51,8 +51,7 @@ async def on_message(message):
 async def command_test(ctx, arg):
     await ctx.send(arg)
 
+TOKEN = os.getenv('TOKEN')
 
-  
 
 
-client.run(os.getenv("TOKEN"))
