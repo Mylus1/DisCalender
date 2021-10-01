@@ -3,20 +3,15 @@ from discord.ext import commands
 import os
 import datetime
 from dotenv import load_dotenv
+import sqlite3
+import db
 
+con = sqlite3.connect("reminders.db")
+cur = con.cursor()
 bot = commands.Bot(command_prefix='!')
 load_dotenv()
-client = discord.Client()
 currentTime = datetime.datetime.now()
 formatDate = currentTime.strftime("%x")
-
-def save_reminders(reminder):
-  if "reminders" in db.keys():
-    reminders = db["reminders"]
-    reminders.append(reminders)
-    db["reminders"] = reminders
-  else:
-    db["reminders"] = [reminders]
 
 def get_local_date():
     currentDate = datetime.datetime.now()
@@ -29,23 +24,25 @@ def get_local_time():
     localTime = currentTime.strftime("%X")
     return localTime
 
-@client.event
+@bot.command(name="SetReminder")
+async def set_reminder(ctx, date, time):
+    await ctx.send(f"Set for {date} at {time}")
+
+@bot.command(name="CurrentDate")
+async def current_date(ctx):
+    await ctx.send(get_local_date())
+
+@bot.command(name="CurrentTime")
+async def set_reminder(ctx):
+    await ctx.send(get_local_time())
+
+@bot.command(name="FullTime")
+async def set_reminder(ctx):
+    await ctx.send(f"{get_local_date()} {get_local_time()}")
+
+@bot.event
 async def on_ready():
-  print("You have logged in as {0.user}".format(client))
-
-@client.event
-async def on_message(message):
-  if message.author == client.user:
-    return
-  
-  if message.content.startswith("!CurrentDate"):
-    await message.channel.send(get_local_date())
-
-  if message.content.startswith("!CurrentTime"):
-    await message.channel.send(get_local_time())
-
-  if message.content.startswith("!FullTime"):
-    await message.channel.send(f"{get_local_date()} {get_local_time()}")
+  print("You have logged in as {0.user}".format(bot))
 
 @bot.command()
 async def command_test(ctx, arg):
@@ -53,5 +50,5 @@ async def command_test(ctx, arg):
 
 TOKEN = os.getenv('TOKEN')
 
-
+bot.run(TOKEN)
 
