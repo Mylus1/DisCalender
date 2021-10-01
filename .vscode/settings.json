@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Reminders",
+            "database": "${workspaceFolder:DisCalender}/reminders.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
